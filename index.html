@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Contacts</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Angular Material style sheet -->
+        <link rel="stylesheet" href="css/angular-material.min.css"> 
+        <link rel="stylesheet" href="css/style.css"> 
+    </head>
+<body ng-app="contactApp" ng-controller="mainController" ng-cloak>
+    <div class="main-container">
+    <div>
+        <md-toolbar class="contact-toolbar">
+            <div class="md-toolbar-tools">
+                <h2 flex md-truncate>Contact List</h2>
+                <input type="text" class="searchbar" placeholder="Search.." name="search" ng-model="searchText">
+                <md-button class="md-raised md-accent md-hue-3" ng-click="addContactDialog()" aria-label="Add Contact">
+                Add Contact
+                </md-button>
+            </div>
+        </md-toolbar>
+        <div class="nocontacts-div" ng-if="contactList==null || contactList==''">No contacts available.</div>
+        <div class="contact-list" ng-if="contactList!=null">
+            <md-list>
+                <md-list-item class="person-detail" ng-repeat="contact in contactList | filter:searchText |orderBy:'firstName' track by $index" ng-click="goToPerson(contact)">
+                    <img src="img/person.png" class="md-avatar"/>
+                    <div class="contact-list-item contact-list-name">
+                        <span>{{ contact.firstName }} {{contact.lastName}}</span>
+                    </div>
+                    <div class="contact-list-item contact-list-number">
+                        <span aria-label="Phone number">{{contact.phone}}</span>
+                    </div>
+                    <img class="btn-func edit-btn" src="img/edit.png" class="md-avatar" ng-click="editContactDialog(contact.phone)"/>
+                    <img class="btn-func" src="img/delete.png" class="md-avatar" ng-click="deleteContactDialog(contact.phone,$event)"/>
+                    <img class="btn-func" ng-src="{{contact.active?('img/active.png'):('img/inactive.png')}}" class="md-avatar"/>
+                </md-list-item>
+            </md-list>
+        </div>
+    </div>
+    <!--        modal for create contact-->
+    <div id="myModal" class="create-modal">
+        <div class="create-modal-content">
+        <form name="contactForm" id="contactForm" autocomplete="off">
+            <md-toolbar>
+              <div class="md-toolbar-tools">
+                <h3 ng-if="!createContact">Create Contact</h3>
+                <h3 ng-if="createContact">Edit Contact</h3>
+              </div>
+            </md-toolbar>
+            <div class="create-modal-body">
+                <md-content class="md-no-momentum popupContent">
+                    <div layout-gt-sm="row" class="input-div">
+                        <md-input-container flex-gt-sm>
+                            <label>First name</label>
+                            <input ng-model="contactInfo.firstName" name="firstName" required="contactInfo.firstName" class="img-class">
+                            <p class="error-block" ng-if="contactForm.firstName.$error.required && contactForm.phonenumber.$touched">Please enter First Name</p>
+                        </md-input-container>
+                        <md-input-container flex-gt-sm>
+                            <label>Last name</label>
+                            <input ng-model="contactInfo.lastName" class="img-class">
+                        </md-input-container>
+                    </div>
+                    <div class="input-div">
+                        <img src="img/call.png" class="md-avatar"/>
+                        <md-input-container md-no-float>
+                            <input ng-model="contactInfo.phone" name="phonenumber" ng-pattern="phoneNumPat" type="text" placeholder="Phone Number*" required="contactInfo.phone">
+                            <p class="error-block" ng-if="!contactForm.phonenumber.$valid && contactForm.phonenumber.$touched">Please enter a 10 digit number</p>
+                        </md-input-container>
+                    </div>
+                    <div class="input-div">
+                        <img src="img/email.png" class="md-avatar img-class"/>
+                        <md-input-container>
+                            <input ng-model="contactInfo.email" name="email" type="email" placeholder="Email">
+                            <p class="error-block" ng-if="!contactForm.email.$valid">Enter valid email</p>
+                        </md-input-container>
+                    </div>
+                    <div class="input-div">
+                        <img src="img/company.png" class="md-avatar"/>
+                        <md-input-container md-no-float>
+                            <input ng-model="contactInfo.company" type="text" placeholder="Company" >
+                        </md-input-container>
+                    </div>
+                    <md-switch md-invert ng-model="contactInfo.active">
+                        Contact Active?
+                        </md-switch>
+                </md-content>
+            </div>
+            <div class="create-modal-footer">
+                <md-button ng-click="cancelContact()">Cancel</md-button>
+                <md-button ng-if="!createContact" ng-click="saveContact(contactInfo,createContact)"  ng-disabled="!contactForm.phonenumber.$valid && contactForm.phonenumber.$touched || !contactForm.email.$valid || contactForm.phonenumber.$untouched || contactForm.firstName.$error.required">Save</md-button>
+                <md-button ng-if="createContact" ng-click="saveContact(contactInfo,createContact)"  ng-disabled="!contactForm.phonenumber.$valid && contactForm.phonenumber.$touched|| !contactForm.email.$valid">Update</md-button>
+            </div>
+        </form>
+        </div>
+    </div>    
+    <!--        modal for show contact-->
+    <div id="showContactModal" class="create-modal">
+      <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Contact Details</span>
+            <span class="md-subhead">
+                <div class="card-det">
+                    <div><img src="img/con_person.png" class="md-avatar"/></div>
+                    <div class="label-class">{{personDet.firstName}} {{personDet.lastName}}</div>
+                </div>
+                <div class="card-det">
+                    <div><img src="img/call.png" class="md-avatar"/></div>
+                    <div class="label-class">{{personDet.phone}}</div>
+                </div>
+                <div class="card-det">
+                    <div><img src="img/email.png" class="md-avatar"/></div>
+                    <div class="label-class">{{personDet.email}}</div>
+                </div>
+                <div class="card-det">
+                    <div><img src="img/company.png" class="md-avatar"/></div>
+                    <div class="label-class">{{personDet.company}}</div>
+                </div>
+            </span>
+          </md-card-title-text>
+          <md-card-title-media>
+            <div class="md-media-sm card-media"><img src="img/person.png" class="md-avatar"/></div>
+          </md-card-title-media>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center" ng-click="cancelContactView()">
+          <md-button>OK</md-button>
+        </md-card-actions>
+      </md-card>
+    </div>
+    </div>
+    <!--angular libraries-->
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-route.min.js"></script>
+    <script src="lib/angular-animate.min.js"></script>
+    <script src="lib/angular-messages.min.js"></script>
+    <script src="lib/angular-aria.min.js"></script>
+    <script src="lib/angular-material.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

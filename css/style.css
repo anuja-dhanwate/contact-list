@@ -1,0 +1,170 @@
+.addIcon{
+    margin-top: 15px;
+}
+.main-container .btn-add{
+    position: absolute;
+    right: 2%;
+}
+.btn-func{
+    width: 20px;
+    height: 20px;
+    margin-left: 1%;
+    z-index: 1;
+    padding: 5px;
+}
+.contact-list{
+    top: 65px;
+    position: relative;
+}
+.edit-btn{
+    margin-left: 5%;
+}
+.main-container{
+    width: 100%;
+    margin: auto;
+}
+.contact-list md-list{
+    padding:0px;
+}
+.contact-toolbar{
+    position:fixed;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+}
+.contact-list-item{
+    box-sizing: border-box;
+    display: table-cell;
+    font-size: 13px;
+    overflow: hidden;
+    padding: 4px;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+.contact-list-item span{
+    outline: 0;
+    position: relative;
+}
+.contact-list-name{
+    font-weight: 500;
+    width: 50%;
+}
+.contact-list-number{
+    width: 0;
+    padding: 0px;
+}
+@media screen and (min-width: 480px) {
+    .contact-list-number{
+    width: 30%;
+    padding: 4px;
+    text-align: center;
+}
+}
+.inputdemoIcons .inputIconDemo{
+min-height: 48px; 
+}
+.inputdemoIcons md-input-container:not(.md-input-invalid) > md-icon.email {
+    color: green; 
+}
+.inputdemoIcons md-input-container:not(.md-input-invalid) > md-icon.name{
+    color: dodgerblue; 
+}
+.inputdemoIcons md-input-container.md-input-invalid > md-icon.email,
+.inputdemoIcons md-input-container.md-input-invalid > md-icon.name {
+    color: red; 
+}
+.create-modal md-input-container{
+    margin:0;
+}
+.create-modal md-switch{
+    margin: 10px;
+}
+.popupContent{
+    padding: 3%;
+}
+.nocontacts-div{
+    text-align: center;
+    top: 65px;
+    position: relative;
+    padding: 2%;
+}
+.create-modal {
+    display: none;
+    position: fixed;
+    z-index: 1; 
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+.create-modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+.error-block{
+    color:red;
+    font-size: 12px;
+}
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+.create-modal-footer {
+    margin: 1%;
+    text-align: right;
+}
+#showContactModal md-card{
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+.card-det{
+    padding-top: 2%;
+}
+.card-det div{
+    display: inline-block;
+}
+.label-class{
+    vertical-align: text-bottom;
+    margin-left: 2%;
+}
+.input-div md-input-container{
+    width:90%;
+}
+.input-div div{
+    width:90%;
+}
+.searchbar[type=text] {
+  padding: 10px;
+  font-size: 14px;
+  float: right;
+  width: 25%;
+  background: #f1f1f1;
+}
+.input-div md-input-container .md-errors-spacer {
+    min-height: 10px;
+}
